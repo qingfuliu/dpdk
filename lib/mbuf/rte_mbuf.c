@@ -271,6 +271,14 @@ rte_pktmbuf_pool_create_by_ops(const char *name, unsigned int n,
 }
 
 /* helper to create a mbuf pool */
+/**
+ * name:内存池的名字
+ * n：内存池子中rte_mbuf的数量
+ * cache_size：每一个cpu中，rte_mbuf的缓存数量
+ * priv_size：私有数据大小，通常为0
+ * data_room_size：rte_mbuf中数据缓冲区的大小
+ * socket_id：memoryPool所在的NUMA节点
+ */
 struct rte_mempool *
 rte_pktmbuf_pool_create(const char *name, unsigned int n,
 	unsigned int cache_size, uint16_t priv_size, uint16_t data_room_size,

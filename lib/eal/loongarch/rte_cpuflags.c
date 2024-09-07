@@ -60,6 +60,7 @@ rte_cpu_get_features(hwcap_registers_t out)
 
 /*
  * Checks if a particular flag is available on current machine.
+ 读取 /proc/self/auxv 文件，检查是否支持对应的CPU
  */
 int
 rte_cpu_get_flag_enabled(enum rte_cpu_flag_t feature)

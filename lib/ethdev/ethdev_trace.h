@@ -340,11 +340,7 @@ RTE_TRACE_POINT(
 	rte_trace_point_emit_int(ret);
 )
 
-RTE_TRACE_POINT(
-	rte_eth_trace_find_next,
-	RTE_TRACE_POINT_ARGS(uint16_t port_id),
-	rte_trace_point_emit_u16(port_id);
-)
+extern rte_trace_point_t __rte_eth_trace_find_next; static inline __attribute__((always_inline)) void rte_eth_trace_find_next (uint16_t port_id) { (per_lcore_trace_point_sz) = sizeof(uint64_t); do { do { _Static_assert(!(sizeof(uint16_t) != sizeof(__typeof__(port_id))), "sizeof(uint16_t) != sizeof(typeof(port_id))"); } while (0); __rte_trace_point_emit_field(sizeof(uint16_t), "port_id", "uint16_t"); } while (0); }
 
 RTE_TRACE_POINT(
 	rte_eth_trace_find_next_of,

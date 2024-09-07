@@ -248,6 +248,16 @@ typedef enum rte_iova_mode (*rte_bus_get_iommu_class_t)(void);
 
 /**
  * A structure describing a generic bus.
+ * rte_bus是总线的抽象数据结构，如pci总线、各个具体的总线挂载在总线链表（rte_bus_list）上，总线还有自己驱动链表和设备链表（dev_iterate），因为一类总线下可能有多个设备。
+ * 
+ * 各个总线通过总线链表通过全局变量rte_bus_list串起来，其在main函数执行之前就初始化完毕了。
+ * 初始化过程：
+ * 
+ * 在./lib/eal/include/bus_driver.h调用RTE_TAILQ_HEAD(rte_bus_list, rte_bus)定义rte_bus_list
+ * lib/eal/common/eal_common_bus.c里面调用宏TAILQ_HEAD_INITIALIZER初始化rte_bus_list
+ * rte_bus_register调用TAILQ_INSERT_TAIL将bus挂到rte_bus_list链表尾部。
+ * 
+ * DPDK的总线模型借鉴了内核总线管理的方式。DPDK提供了rte_bus_list全局链表，使用gcc的constructor构造属性，让总线在main函数执行之前完成注册。
  */
 struct rte_bus {
 	RTE_TAILQ_ENTRY(rte_bus) next; /**< Next bus object in linked list */

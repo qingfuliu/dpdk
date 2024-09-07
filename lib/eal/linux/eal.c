@@ -997,6 +997,7 @@ rte_eal_init(int argc, char **argv)
 		return -1;
 	}
 
+	//初始化全局配置 internal_conf
 	eal_reset_internal_config(internal_conf);
 
 	/* set log level as early as possible */

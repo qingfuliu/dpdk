@@ -47,6 +47,7 @@ struct rte_eth_rxtx_callback {
  * where all the data elements for the particular device are stored in shared
  * memory. This split allows the function pointer and driver data to be per-
  * process, while the actual configuration data for the device is shared.
+ * 网卡设备的抽象，每一个代表一个网卡
  */
 struct __rte_cache_aligned rte_eth_dev {
 	eth_rx_burst_t rx_pkt_burst; /**< Pointer to PMD receive function */

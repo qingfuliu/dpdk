@@ -19,6 +19,7 @@
 
 /**
  * Structure storing internal configuration (per-lcore)
+ * 存储每个核心的内部结构
  */
 struct lcore_config {
 	rte_thread_t thread_id;    /**< thread identifier */

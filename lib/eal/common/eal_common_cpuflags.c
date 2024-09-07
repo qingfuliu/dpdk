@@ -7,6 +7,9 @@
 #include <rte_common.h>
 #include <rte_cpuflags.h>
 
+/**
+ * 读取 /proc/self/auxv 文件，检查是否支持对应的CPU
+ */
 int
 rte_cpu_is_supported(void)
 {

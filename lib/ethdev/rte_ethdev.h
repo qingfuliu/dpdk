@@ -1754,12 +1754,12 @@ enum rte_eth_err_handle_mode {
  * device, etc...
  */
 struct rte_eth_dev_info {
-	struct rte_device *device; /**< Generic device information */
-	const char *driver_name; /**< Device Driver name. */
-	unsigned int if_index; /**< Index to bound host interface, or 0 if none.
+	struct rte_device *device; /**< 描述该设备的信息 */
+	const char *driver_name; /**< 描述该以太网设备所使用的驱动程序名称 */
+	unsigned int if_index; /**< 接口描述符的索引，主机系统可以通过这个索引获取配置下每个接口的详细信息
 		Use if_indextoname() to translate into an interface name. */
-	uint16_t min_mtu;	/**< Minimum MTU allowed */
-	uint16_t max_mtu;	/**< Maximum MTU allowed */
+	uint16_t min_mtu;	/**< 是指网络能够传输的最大数据包大小，以字节为单位。MTU的大小决定了发送端一次能够发送报文的最大字节数 */
+	uint16_t max_mtu;	/**<是指网络能够传输的最大数据包大小，以字节为单位。MTU的大小决定了发送端一次能够发送报文的最大字节数 */
 	const uint32_t *dev_flags; /**< Device flags */
 	/** Minimum Rx buffer size per descriptor supported by HW. */
 	uint32_t min_rx_bufsize;
@@ -1781,7 +1781,11 @@ struct rte_eth_dev_info {
 	uint16_t max_vfs; /**< Maximum number of VFs. */
 	uint16_t max_vmdq_pools; /**< Maximum number of VMDq pools. */
 	struct rte_eth_rxseg_capa rx_seg_capa; /**< Segmentation capability.*/
-	/** All Rx offload capabilities including all per-queue ones */
+	/** All Rx offload capabilities including all per-queue ones 
+	 * 首先要从术语offload说起，offload指的是将一个本来有软件实现的功能放到硬件上来实现，
+	 * 这样就可以将本来在操作系统上进行的一些数据包处理（如分片、重组等）放到网卡硬件上去做，
+	 * 降低系统CPU消耗的同时，提高处理性能。
+	*/
 	uint64_t rx_offload_capa;
 	/** All Tx offload capabilities including all per-queue ones */
 	uint64_t tx_offload_capa;
@@ -1804,8 +1808,8 @@ struct rte_eth_dev_info {
 	struct rte_eth_desc_lim tx_desc_lim;  /**< Tx descriptors limits */
 	uint32_t speed_capa;  /**< Supported speeds bitmap (RTE_ETH_LINK_SPEED_). */
 	/** Configured number of Rx/Tx queues */
-	uint16_t nb_rx_queues; /**< Number of Rx queues. */
-	uint16_t nb_tx_queues; /**< Number of Tx queues. */
+	uint16_t nb_rx_queues; /**< 接收队列数目. */
+	uint16_t nb_tx_queues; /**< 发送队列数目 */
 	/**
 	 * Maximum number of Rx mempools supported per Rx queue.
 	 *

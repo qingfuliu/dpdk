@@ -73,6 +73,7 @@ rte_lcore_has_role(unsigned int lcore_id, enum rte_lcore_role_t role);
  * @return
  *  Logical core ID (in EAL thread or registered non-EAL thread) or
  *  LCORE_ID_ANY (in unregistered non-EAL thread)
+ * 返回线程局部变量 thread_id 
  */
 static inline unsigned
 rte_lcore_id(void)

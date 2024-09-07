@@ -826,7 +826,7 @@ rte_mempool_create_empty(const char *name, unsigned n, unsigned elt_size,
 			  RTE_CACHE_LINE_MASK) != 0);
 #endif
 
-	mempool_list = RTE_TAILQ_CAST(rte_mempool_tailq.head, rte_mempool_list);
+	mempool_list = (struct rte_mempool_list *)&(rte_mempool_tailq.head)->tailq_head;
 
 	/* asked for zero items */
 	if (n == 0) {

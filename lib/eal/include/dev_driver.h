@@ -23,6 +23,10 @@ struct rte_driver {
 
 /**
  * A structure describing a generic device.
+ * 设备名称
+ * 总线信息
+ * 所属的numa
+ * 所使用的驱动
  */
 struct rte_device {
 	RTE_TAILQ_ENTRY(rte_device) next; /**< Next device */
