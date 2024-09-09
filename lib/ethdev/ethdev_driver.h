@@ -70,10 +70,13 @@ struct __rte_cache_aligned rte_eth_dev {
 
 	/**
 	 * Device data that is shared between primary and secondary processes
+	 * 在主进程和辅助进程之间共享的设备数据
 	 */
 	struct rte_eth_dev_data *data;
 	void *process_private; /**< Pointer to per-process device data */
-	const struct eth_dev_ops *dev_ops; /**< Functions exported by PMD */
+	const struct eth_dev_ops *dev_ops; /**dev_ops是网卡驱动注册的函数表，类型为struct eth_dev_ops，主要有配置函数：
+	dev_infos_get
+	< Functions exported by PMD */
 	/** Fast path flow API functions exported by PMD */
 	const struct rte_flow_fp_ops *flow_fp_ops;
 	struct rte_device *device; /**< Backing device */

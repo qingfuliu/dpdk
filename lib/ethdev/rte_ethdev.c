@@ -1411,6 +1411,8 @@ int rte_eth_dev_configure(uint16_t port_id, uint16_t nb_rx_q, uint16_t nb_tx_q,
 		goto rollback;
 	}
 
+	/*TODO
+	 */
 	if (dev_conf->txmode.reserved_64s[0] != 0 ||
 		dev_conf->txmode.reserved_64s[1] != 0 ||
 		dev_conf->txmode.reserved_ptrs[0] != NULL ||
@@ -1480,7 +1482,8 @@ int rte_eth_dev_configure(uint16_t port_id, uint16_t nb_rx_q, uint16_t nb_tx_q,
 		goto rollback;
 	}
 
-	/* Check that the device supports requested interrupts */
+	/* TODO:
+	Check that the device supports requested interrupts */
 	if ((dev_conf->intr_conf.lsc == 1) &&
 		(!(dev->data->dev_flags & RTE_ETH_DEV_INTR_LSC)))
 	{

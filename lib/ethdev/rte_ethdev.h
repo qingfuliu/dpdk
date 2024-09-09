@@ -1677,6 +1677,7 @@ struct rte_eth_dev_portconf {
 
 /**
  * Ethernet device associated switch information
+ * 与交换机相关的信息
  */
 struct rte_eth_switch_info {
 	const char *name;	/**< switch name */
@@ -1764,10 +1765,10 @@ struct rte_eth_dev_info {
 	/** Minimum Rx buffer size per descriptor supported by HW. */
 	uint32_t min_rx_bufsize;
 	/**
-	 * Maximum Rx buffer size per descriptor supported by HW.
-	 * The value is not enforced, information only to application to
-	 * optimize mbuf size.
-	 * Its value is UINT32_MAX when not specified by the driver.
+	 * 硬件支持的每个描述符的最大Rx缓冲区大小。
+	 * 该值不强制执行，信息仅适用于应用程序
+	 * 优化mbuf尺寸。
+	 * 当驱动程序未指定时，其值为UINT32_MAX。
 	 */
 	uint32_t max_rx_bufsize;
 	uint32_t max_rx_pktlen; /**< Maximum configurable length of Rx pkt. */
@@ -1795,8 +1796,8 @@ struct rte_eth_dev_info {
 	uint64_t tx_queue_offload_capa;
 	/** Device redirection table size, the total number of entries. */
 	uint16_t reta_size;
-	uint8_t hash_key_size; /**< Hash key size in bytes */
-	uint32_t rss_algo_capa; /** RSS hash algorithms capabilities */
+	uint8_t hash_key_size; /**< Hash key 的大小 */
+	uint32_t rss_algo_capa; /** 报告 RSS哈希算法功能 */
 	/** Bit mask of RSS offloads, the bit offset also means flow type */
 	uint64_t flow_type_rss_offloads;
 	struct rte_eth_rxconf default_rxconf; /**< Default Rx configuration */
@@ -1826,6 +1827,7 @@ struct rte_eth_dev_info {
 	/**
 	 * Switching information for ports on a device with a
 	 * embedded managed interconnect/switch.
+	 * 与交换机相关的信息
 	 */
 	struct rte_eth_switch_info switch_info;
 	/** Supported error handling mode. */
@@ -2356,7 +2358,14 @@ const char *rte_eth_dev_capability_name(uint64_t capability);
  * This function must be invoked first before any other function in the
  * Ethernet API. This function can also be re-invoked when a device is in the
  * stopped state.
- *
+ * 拿到对应的网卡，确保其没有处于运行状态（dev->data->dev_started）
+ * 2：dev_conf，失败后恢复
+ * 存储dev->data->dev_conf，失败后恢复
+ * 确保dev_conf==dev->data->dev_conf
+ * 确保rxmode和txmode中。保留给将来的字段为0
+ * 3、dev_info：
+ * rte_eth_dev_info_get 获取 dev_info：
+ * 4、nb_rx_q、nb_tx_q：并检查这两个字段（dev_info.max_rx_queues）
  * @param port_id
  *   The port identifier of the Ethernet device to configure.
  * @param nb_rx_queue
@@ -3400,7 +3409,14 @@ int rte_eth_macaddrs_get(uint16_t port_id, struct rte_ether_addr *ma,
  * on the values stored internally in the device specific data.
  * For example: number of queues, descriptor limits, device
  * capabilities and offload flags.
- *
+ * 主要设置dev_info的以下字段：
+ * switch_info.domain_id：将交换机id设置为其默认值
+ * rx_desc_lim、tx_desc_lim：接收和发送的描述符限制：每个mtu的分段最大值、每个包的每段最大值等
+ * device：描述该设备的信息
+ * min_mtu、max_mtu:最大报文大小、最小报文大小
+ * max_rx_bufsize：硬件支持的每个描述符的最大缓冲区大小
+ * max_rx_queues、max_tx_queues、nb_rx_queues、nb_tx_queues
+ * 
  * @param port_id
  *   The port identifier of the Ethernet device.
  * @param dev_info
